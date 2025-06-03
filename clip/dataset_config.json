@@ -1,0 +1,22 @@
+{
+  "description": "Configuration file for zero-shot evaluation datasets",
+  "model_config": {
+    "model_name": "ViT-B-16",
+    "batch_size": 64,
+    "num_workers": 4
+  },
+  "datasets": [
+    {
+      "name": "Lung",
+      "description": "Lung cancer histopathology images",
+      "prompt": "/path/to/lung_prompt.json",
+      "data_dir": "/path/to/lung_image_sets",
+      "enabled": true
+    }
+  ],
+  "evaluation_settings": {
+    "detailed_metrics": true,
+    "save_predictions": false,
+    "output_formats": ["json", "csv"]
+  }
+}
