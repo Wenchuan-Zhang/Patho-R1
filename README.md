@@ -51,8 +51,14 @@ torchrun
 
 # Inference
 ## Patho-CLIP
-1. Load the Patho-CLIP model
-```
+
+**1. Request access to the model weights from the Huggingface model page [here](https://huggingface.co/WenchuanZhang/Patho-CLIP-B).**
+
+**2. Download the model weights**
+
+**3. Loading the model**
+
+```python
 import torch
 from PIL import Image
 import open_clip
@@ -63,8 +69,10 @@ model.eval()
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model = model.to(device)
 ```
-2. Load and preprocess the input image and prompts
-```
+You should replace the `/path/to/PathoCLIP-B.pt` with your own true path.It is recommended to use absolute path.
+
+**4. Load and preprocess the input image and prompts**
+```python
 image_tensor = preprocess(Image.open("data/example.jpg")) .unsqueeze(0).to(device)
 
 prompts = [
@@ -80,8 +88,8 @@ prompts = [
 ]
 text = tokenizer(prompts).to(device)
 ```
-3. Calculate similarity
-```
+**5. Calculate similarity**
+```python
 with torch.inference_mode():
     # Encode and normalize the image
     image_embeddings = model.encode_image(image_tensor) 
