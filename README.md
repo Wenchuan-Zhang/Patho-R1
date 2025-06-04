@@ -51,6 +51,7 @@ torchrun
 
 # Inference
 ## Patho-CLIP
+### Zero_shot cross-modality retrieval task (Image/Text)
 
 **1. Request access to the model weights from the Huggingface model page [here](https://huggingface.co/WenchuanZhang/Patho-CLIP-B).**
 
