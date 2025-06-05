@@ -49,6 +49,68 @@ pip install -e .
 torchrun 
 ```
 
+# Inference
+## Patho-CLIP
+### Zero_shot cross-modality retrieval task (Image/Text)
+
+**1. Request access to the model weights from the Huggingface model page [here](https://huggingface.co/WenchuanZhang/Patho-CLIP-B).**
+
+**2. Download the model weights**
+
+**3. Loading the model**
+
+```python
+import torch
+from PIL import Image
+import open_clip
+
+model, _, preprocess = open_clip.create_model_and_transforms('ViT-B-16',pretrained='/path/to/PathoCLIP-B.pt')
+tokenizer = open_clip.get_tokenizer('ViT-B-16')
+model.eval()
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+model = model.to(device)
+```
+You should replace the `/path/to/PathoCLIP-B.pt` with your own true path.It is recommended to use absolute path.
+
+**4. Load and preprocess the input image and prompts**
+```python
+image_tensor = preprocess(Image.open("data/example.jpg")) .unsqueeze(0).to(device)
+
+prompts = [
+    'Photomicrograph showing connective tissue stroma with malignant chondrocytes and areas of highly cellular tissue composed of small round or spindle-shaped cells along with areas of calcification (H&E stain, x200).',
+    'IHC staining showing HMB-45 positivity in peripheral epitheloid cells.',
+    'Tumor cells infiltrating adjacent bone (H and E, x400).',
+    'Lung adenocarcinoma, H&E stain.',
+    'The metastatic colorectal adenocarcinoma shows positive immunohistochemical staining for CDX2.',
+    'Breast core biopsy shows colorectal metastatic adenocarcinoma with diffuse positive nuclear staining for CDX2.',
+    'The metastatic tumor to the lymph node exhibits positive staining for GATA3.',
+    'The sigmoid colon shows transmural invasion by adenocarcinoma.',
+    'An image of a fish.' 
+]
+text = tokenizer(prompts).to(device)
+```
+**5. Calculate similarity**
+```python
+with torch.inference_mode():
+    # Encode and normalize the image
+    image_embeddings = model.encode_image(image_tensor) 
+    image_embeddings = image_embeddings / image_embeddings.norm(dim=-1, keepdim=True)
+
+    # Encode and normalize the text prompts
+    text_embeddings = model.encode_text(text)  
+    text_embeddings = text_embeddings / text_embeddings.norm(dim=-1, keepdim=True)
+
+    # Compute cosine similarity between image and each text prompt
+    sim_scores = (image_embeddings @ text_embeddings.T).squeeze(0)  
+
+ranked_scores, ranked_idx = torch.sort(sim_scores, descending=True)
+print("Ranked list of prompts based on cosine similarity with the image:")
+for idx, score in zip(ranked_idx, ranked_scores):
+    print(f"\"{prompts[idx]}\": {score.item():.4f}")
+```
+
+
+
 # Acknowledgements✨
 We gratefully acknowledge the contributions of the open-source community, particularly the following projects which laid the foundation for various components of this work:
 
