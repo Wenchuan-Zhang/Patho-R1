@@ -1,3 +1,14 @@
 __pycache__
 *.pyc
 *.egg-info
+
+# macOS specific files
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Icon
+.AppleDB
+output
+dependencies
+models
