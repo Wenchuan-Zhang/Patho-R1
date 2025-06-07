@@ -133,7 +133,7 @@ You should replace the `/path/to/PathoCLIP-B.pt` with your own true path.It is r
 
 **4. Load and preprocess the input image and prompts**
 ```python
-image_tensor = preprocess(Image.open("data/example.jpg")) .unsqueeze(0).to(device)
+image_tensor = preprocess(Image.open("data/example.jpg")).unsqueeze(0).to(device)
 
 prompts = [
     'Photomicrograph showing connective tissue stroma with malignant chondrocytes and areas of highly cellular tissue composed of small round or spindle-shaped cells along with areas of calcification (H&E stain, x200).',
