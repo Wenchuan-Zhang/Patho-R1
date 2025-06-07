@@ -79,7 +79,7 @@ messages = [
         "content": [
             {
                 "type": "image",
-                "image": "./images/241.jpg",
+                "image": "./images/example.jpg",
             },
             {"type": "text", "text": "What feature in the provided micrograph is indicative of chronic inflammation? /n A. Granuloma formation /n B. Multinucleated giant cells /n C. Neutrophilic infiltration /n D. Plasma cells with eccentrically placed nuclei"},       
         ],
