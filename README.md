@@ -9,6 +9,12 @@
 <a href="https://arxiv.org/abs/2505.11404" target="_blank">
     <img alt="arXiv" src="https://img.shields.io/badge/arXiv-Patho--R1-red?logo=arxiv" height="20" />
 </a>
+<a href="https://huggingface.co/WenchuanZhang/Patho-CLIP-B">
+  <img alt="HF Model: Patho-CLIP-B" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Model-Patho--CLIP--B-ffc107?color=ffc107&logoColor=white" height="20" />
+</a>
+<a href="https://huggingface.co/WenchuanZhang/Patho-CLIP-L">
+  <img alt="HF Model: Patho-CLIP-L" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Model-Patho--CLIP--L-ffc107?color=ffc107&logoColor=white" height="20" />
+</a>
 <a href="https://huggingface.co/WenchuanZhang/Patho-R1-3B">
   <img alt="HF Model: Patho-R1-3B" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Model-Patho--R1--3B-ffc107?color=ffc107&logoColor=white" height="20" />
 </a>
@@ -29,8 +35,8 @@ Experimental results show that **Patho-R1** achieves strong performance across k
 
 ## TODOS📌
 - [x] `2025-05-29` ⭐️: Initial release of Patho-R1 models and inference pipeline
-- [ ] 🎯: Release Patho-CLIP model weights and evaluation script
-- [ ] 🎯: Release training code and detailed dataset construction pipeline
+- [x] ⭐️: Release Patho-CLIP model weights and evaluation script
+- [ ] 🎯: Release detailed dataset construction pipeline
 
 # Installation🛠️
 ```bash
@@ -44,14 +50,67 @@ cd Patho-R1
 pip install -e .
 ```
 
-# Training🚉
-```bash
-torchrun 
-```
+# Inference🏃
+## 🧠 Patho-R1
+Below is a code snippet demonstrating how to run inference using the Patho-R1-7B model with `transformers` and utility functions from `qwen_vl_utils`:
 
-# Inference
-## Patho-CLIP
-### Zero_shot cross-modality retrieval task (Image/Text)
+```python
+from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor
+from qwen_vl_utils import process_vision_info
+
+
+model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+    "WenchuanZhang/Patho-R1-7B",
+    torch_dtype="auto", device_map="auto"
+)
+processor = AutoProcessor.from_pretrained("WenchuanZhang/Patho-R1-7B")
+
+# example question from Pathmmu-test-dataset
+# ground truth: D
+# Reasoning style options (choose one):
+# - Chain-of-Draft, a concise reasoning prompting strategy (COD):
+# You are a pathology expert, your task is to think step by step, but only keep a minimum draft for each thinking step, with 5 words at most. Return the answer at the end of the response after a separator. Use the following format:<think> Your step-by-step reasoning </think><answer> Your final answer </answer>
+# - Chain-of-Thought (COT):
+messages = [
+    {   "role": "system",
+        "content": "You are a pathology expert, your task is to answer question step by step. Use the following format:<think> Your step-by-step reasoning </think><answer> Your final answer </answer>"},
+    {
+        "role": "user",
+        "content": [
+            {
+                "type": "image",
+                "image": "./images/241.jpg",
+            },
+            {"type": "text", "text": "What feature in the provided micrograph is indicative of chronic inflammation? /n A. Granuloma formation /n B. Multinucleated giant cells /n C. Neutrophilic infiltration /n D. Plasma cells with eccentrically placed nuclei"},       
+        ],
+    }
+]
+# Preparation for inference
+text = processor.apply_chat_template(
+    messages, tokenize=False, add_generation_prompt=True
+)
+image_inputs, video_inputs = process_vision_info(messages)
+inputs = processor(
+    text=[text],
+    images=image_inputs,
+    videos=video_inputs,
+    padding=True,
+    return_tensors="pt",
+)
+inputs = inputs.to(model.device)
+
+# Inference: Generation of the output
+generated_ids = model.generate(**inputs, max_new_tokens=2048)
+generated_ids_trimmed = [
+    out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+]
+output_text = processor.batch_decode(
+    generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
+)
+print(output_text)
+```
+## 🔍 Patho-CLIP
+### Zero-shot Cross-modal Retrieval (Image ↔ Text)
 
 **1. Request access to the model weights from the Huggingface model page [here](https://huggingface.co/WenchuanZhang/Patho-CLIP-B).**
 
