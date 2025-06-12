@@ -56,7 +56,7 @@ The book pdf goes through a 5 step pipeline to extract image-caption pairs:
 
 3. **Cropping**
    
-   Cropping ROIs, i.e., image regions according to the layout annotation of step 2. Note that annotations are based on the low-res images, so cropping positions are calculated accordingly to crop images from high-res document pages to better preserve visual detail informations.
+   Cropping ROIs, i.e., image regions according to the layout annotation of step 2. Note that annotations are based on the low-res images, so cropping positions are calculated accordingly to crop images from high-res document pages to better preserve visual detail information.
 
 4. **In-line reference extraction**
    

@@ -1,0 +1,46 @@
+[
+    {
+        "bbox": [
+            111,
+            405,
+            422,
+            643
+        ],
+        "caption": "良性叶状肿瘤。分叶状结构。",
+        "figure_path": "./output/crops/0002_fig0.jpg",
+        "inline_ref": "A.分叶状结构;"
+    },
+    {
+        "bbox": [
+            432,
+            405,
+            742,
+            643
+        ],
+        "caption": "良性叶状肿瘤。叶状结构衬覆导管上皮，增生间质梭形细胞形态温和。",
+        "figure_path": "./output/crops/0002_fig1.jpg",
+        "inline_ref": "B.叶状结构衬覆导管上皮，增生间质梭形细胞形态温和。"
+    },
+    {
+        "bbox": [
+            111,
+            729,
+            422,
+            963
+        ],
+        "caption": "交界性叶状肿瘤。间质梭形细胞密度增加。",
+        "figure_path": "./output/crops/0002_fig2.jpg",
+        "inline_ref": "A.间质梭形细胞密度增加；"
+    },
+    {
+        "bbox": [
+            432,
+            729,
+            742,
+            963
+        ],
+        "caption": "交界性叶状肿瘤。间质梭形细胞具有中度异型性，可见核分裂象。",
+        "figure_path": "./output/crops/0002_fig3.jpg",
+        "inline_ref": "B.间质梭形细胞具有中度异型性，可见核分裂象。"
+    }
+]
