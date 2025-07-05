@@ -44,10 +44,13 @@ Experimental results show that **Patho-R1** achieves strong performance across k
 conda create -n patho-r1 python=3.10 -y  
 conda activate patho-r1
 
+# Install PyTorch (specify CUDA version)
+pip install torch==2.5.1+cu121 torchvision==0.20.1+cu121 torchaudio==2.5.1+cu121 --index-url https://download.pytorch.org/whl/cu121
+
 # Clone the repository and install dependencies
 git clone https://github.com/Wenchuan-Zhang/Patho-R1.git
 cd Patho-R1
-pip install -e .
+pip install -r requirements.txt
 ```
 
 # Inference🏃
@@ -112,7 +115,7 @@ print(output_text)
 ## 🔍 Patho-CLIP
 ### Zero-shot Cross-modal Retrieval (Image ↔ Text)
 
-**1. Request access to the model weights from the Huggingface model page [here](https://huggingface.co/WenchuanZhang/Patho-CLIP-B).**
+**1. Request access to the model weights from the Huggingface model page [here](https://huggingface.co/WenchuanZhang/Patho-CLIP-L).**
 
 **2. Download the model weights**
 
@@ -123,13 +126,18 @@ import torch
 from PIL import Image
 import open_clip
 
-model, _, preprocess = open_clip.create_model_and_transforms('ViT-B-16',pretrained='/path/to/PathoCLIP-B.pt')
-tokenizer = open_clip.get_tokenizer('ViT-B-16')
+# Alternative: Use ViT-B-16 (Base) model
+# model, _, preprocess = open_clip.create_model_and_transforms('ViT-B-16',pretrained='/path/to/Patho-CLIP-B.pt')
+# tokenizer = open_clip.get_tokenizer('ViT-B-16')
+
+# Currently loading ViT-L-14 (Large) model
+model, _, preprocess = open_clip.create_model_and_transforms('ViT-L-14', pretrained='/path/to//Patho-CLIP-L.pt')
+tokenizer = open_clip.get_tokenizer('ViT-L-14')
 model.eval()
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 model = model.to(device)
 ```
-You should replace the `/path/to/PathoCLIP-B.pt` with your own true path.It is recommended to use absolute path.
+You should replace the `/path/to/Patho-CLIP-L.pt` with your own true path.It is recommended to use absolute path.
 
 **4. Load and preprocess the input image and prompts**
 ```python
