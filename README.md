@@ -6,21 +6,6 @@
 
 <br />
 
-<a href="https://arxiv.org/abs/2505.11404" target="_blank">
-    <img alt="arXiv" src="https://img.shields.io/badge/arXiv-Patho--R1-red?logo=arxiv" height="20" />
-</a>
-<a href="https://huggingface.co/WenchuanZhang/Patho-CLIP-B">
-  <img alt="HF Model: Patho-CLIP-B" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Model-Patho--CLIP--B-ffc107?color=ffc107&logoColor=white" height="20" />
-</a>
-<a href="https://huggingface.co/WenchuanZhang/Patho-CLIP-L">
-  <img alt="HF Model: Patho-CLIP-L" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Model-Patho--CLIP--L-ffc107?color=ffc107&logoColor=white" height="20" />
-</a>
-<a href="https://huggingface.co/WenchuanZhang/Patho-R1-3B">
-  <img alt="HF Model: Patho-R1-3B" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Model-Patho--R1--3B-ffc107?color=ffc107&logoColor=white" height="20" />
-</a>
-<a href="https://huggingface.co/WenchuanZhang/Patho-R1-7B">
-  <img alt="HF Model: Patho-R1-7B" src="https://img.shields.io/badge/%F0%9F%A4%97%20_Model-Patho--R1--7B-ffc107?color=ffc107&logoColor=white" height="20" />
-</a>
 </div>
 
 # Introduction📝
@@ -33,11 +18,6 @@ To address this gap, we introduce **Patho-R1**, a multimodal pathology reasoner 
 
 Experimental results show that **Patho-R1** achieves strong performance across key pathology tasks, including **multiple choice questions** and **visual question answering**, highlighting its potential for real-world pathology AI applications.
 
-## TODOS📌
-- [x] `2025-05-29` ⭐️: Initial release of Patho-R1 models and inference pipeline
-- [x] ⭐️: Release Patho-CLIP model weights and evaluation script
-- [ ] 🎯: Release detailed dataset construction pipeline
-
 # Installation🛠️
 ```bash
 # Create and activate a new conda environment
@@ -48,7 +28,7 @@ conda activate patho-r1
 pip install torch==2.5.1+cu121 torchvision==0.20.1+cu121 torchaudio==2.5.1+cu121 --index-url https://download.pytorch.org/whl/cu121
 
 # Clone the repository and install dependencies
-git clone https://github.com/Wenchuan-Zhang/Patho-R1.git
+git clone https://github.com/xxx/Patho-R1.git
 cd Patho-R1
 pip install -r requirements.txt
 ```
@@ -63,10 +43,10 @@ from qwen_vl_utils import process_vision_info
 
 
 model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-    "WenchuanZhang/Patho-R1-7B",
+    "xxx/Patho-R1-7B",
     torch_dtype="auto", device_map="auto"
 )
-processor = AutoProcessor.from_pretrained("WenchuanZhang/Patho-R1-7B")
+processor = AutoProcessor.from_pretrained("xxx/Patho-R1-7B")
 
 # example question from Pathmmu-test-dataset
 # ground truth: D
@@ -115,7 +95,7 @@ print(output_text)
 ## 🔍 Patho-CLIP
 ### Zero-shot Cross-modal Retrieval (Image ↔ Text)
 
-**1. Request access to the model weights from the Huggingface model page [here](https://huggingface.co/WenchuanZhang/Patho-CLIP-L).**
+**1. Request access to the model weights from the Huggingface model page [here].**
 
 **2. Download the model weights**
 
@@ -131,7 +111,7 @@ import open_clip
 # tokenizer = open_clip.get_tokenizer('ViT-B-16')
 
 # Currently loading ViT-L-14 (Large) model
-model, _, preprocess = open_clip.create_model_and_transforms('ViT-L-14', pretrained='/path/to//Patho-CLIP-L.pt')
+model, _, preprocess = open_clip.create_model_and_transforms('ViT-L-14', pretrained='/path/to/Patho-CLIP-L.pt')
 tokenizer = open_clip.get_tokenizer('ViT-L-14')
 model.eval()
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -190,15 +170,3 @@ We gratefully acknowledge the contributions of the open-source community, partic
 - [DeepSeek](https://github.com/deepseek-ai) for high-quality models and infrastructure supporting text understanding.
 
 We thank the authors and contributors of these repositories for their dedication and impactful work, which made our development of Patho-R1 possible.
-
-# Citation❤️
-If you find our work helpful, a citation would be greatly appreciated. Also, consider giving us a star ⭐ on GitHub to support the project!
-
-```
-@article{zhang2025patho,
-  title={Patho-R1: A Multimodal Reinforcement Learning-Based Pathology Expert Reasoner},
-  author={Zhang, Wenchuan and Zhang, Penghao and Guo, Jingru and Cheng, Tao and Chen, Jie and Zhang, Shuwan and Zhang, Zhang and Yi, Yuhao and Bu, Hong},
-  journal={arXiv preprint arXiv:2505.11404},
-  year={2025}
-}
-```
