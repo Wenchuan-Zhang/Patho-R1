@@ -36,8 +36,9 @@ Experimental results show that **Patho-R1** achieves strong performance across k
 ## TODOS📌
 - [x] `2025-05-29` ⭐️: Initial release of Patho-R1 models and inference pipeline
 - [x] ⭐️: Release Patho-CLIP model weights and evaluation script
-- [ ] 🎯: Release detailed dataset construction pipeline
+- [x] ⭐️: Release detailed dataset construction pipeline
 
+`2025-11-08`: Congratulations! 🎉🎉🎉 Patho-R1 has been accepted by AAAI 2026🎯
 # Installation🛠️
 ```bash
 # Create and activate a new conda environment
