@@ -23,7 +23,7 @@
 </a>
 </div>
 
-# Introduction📝
+## Introduction📝
 While vision-language models have shown impressive progress in general medical domains, pathology remains a challenging subfield due to its high-resolution image requirements and complex diagnostic reasoning.  
 
 To address this gap, we introduce **Patho-R1**, a multimodal pathology reasoner designed to enhance diagnostic understanding through structured reasoning. **Patho-R1** is trained using a three-stage pipeline:  
@@ -39,7 +39,7 @@ Experimental results show that **Patho-R1** achieves strong performance across k
 - [x] ⭐️: Release detailed dataset construction pipeline
 
 `2025-11-08`: Congratulations! 🎉🎉🎉 Patho-R1 has been accepted by AAAI 2026🎯
-# Installation🛠️
+## Installation🛠️
 ```bash
 # Create and activate a new conda environment
 conda create -n patho-r1 python=3.10 -y  
@@ -54,8 +54,8 @@ cd Patho-R1
 pip install -r requirements.txt
 ```
 
-# Inference🏃
-## 🧠 Patho-R1
+## Inference🏃
+### 🧠 Patho-R1
 Below is a code snippet demonstrating how to run inference using the Patho-R1-7B model with `transformers` and utility functions from `qwen_vl_utils`:
 
 ```python
@@ -113,8 +113,8 @@ output_text = processor.batch_decode(
 )
 print(output_text)
 ```
-## 🔍 Patho-CLIP
-### Zero-shot Cross-modal Retrieval (Image ↔ Text)
+### 🔍 Patho-CLIP
+#### Zero-shot Cross-modal Retrieval (Image ↔ Text)
 
 **1. Request access to the model weights from the Huggingface model page [here](https://huggingface.co/WenchuanZhang/Patho-CLIP-L).**
 
@@ -179,7 +179,7 @@ for idx, score in zip(ranked_idx, ranked_scores):
 
 
 
-# Acknowledgements✨
+## Acknowledgements✨
 We gratefully acknowledge the contributions of the open-source community, particularly the following projects which laid the foundation for various components of this work:
 
 - [Qwen](https://github.com/QwenLM) for providing powerful vision language models that significantly advanced our multimodal understanding and generation capabilities.  
@@ -192,7 +192,7 @@ We gratefully acknowledge the contributions of the open-source community, partic
 
 We thank the authors and contributors of these repositories for their dedication and impactful work, which made our development of Patho-R1 possible.
 
-# Citation❤️
+## Citation❤️
 If you find our work helpful, a citation would be greatly appreciated. Also, consider giving us a star ⭐ on GitHub to support the project!
 
 ```
